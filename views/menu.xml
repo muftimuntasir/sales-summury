@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem
+            name="Sales Summary Report"
+            id="menu_sales_summary_report_module"/>
+
+
+     <menuitem id="salessummary_report_menu"
+              parent="sale.sale_menu_root"
+              action="sales_summary_report_wizard"
+              sequence="10"
+    />
+
+</odoo>

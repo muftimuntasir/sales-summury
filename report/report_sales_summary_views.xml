@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+
+    <template id="report_sales_summary">
+        <t t-call="web.html_container">
+            <t t-call="web.external_layout">
+                <div class="page">
+                    <div class="oe_structure"/>
+                    <t t-foreach="search_data" t-as="sea_data">
+
+                        <div class="row mt32 mb32" id="informations">
+                            <div  class="col-auto mw-100 mb-2">
+                                <strong>Start Date:</strong>
+                                <p class="m-0"><span t-esc="sea_data.get('st_date')"/></p>
+                            </div>
+
+                            <div  class="col-auto mw-100 mb-2">
+                                <strong>End Date:</strong>
+                                <p class="m-0"><span t-esc="sea_data.get('end_date')"/></p>
+                            </div>
+
+
+                             <div  class="col-auto mw-100 mb-2">
+                                <strong>Product Name: </strong>
+                                <p class="m-0"><span t-esc="sea_data.get('p_name')"/></p>
+                            </div>
+
+                             <div  class="col-auto mw-100 mb-2">
+                                <strong>Product Category:</strong>
+                                <p class="m-0"><span t-esc="sea_data.get('p_categ')"/></p>
+                            </div>
+                            <div  class="col-auto mw-100 mb-2">
+                                <strong>Customer Name:</strong>
+                                <p class="m-0"><span t-esc="sea_data.get('c_name')"/></p>
+                            </div>
+
+
+
+                        </div>
+                    </t>
+
+                    <div class="row">
+                        <table style="width:100%;">
+                            <tbody>
+
+
+                                <tr style="border: 1px solid black ; width:100%;">
+                                    <td style="border: 1px solid black ; text-align: center; font-weight: bold;">
+                                        <span style="color: #000000; font-family: Kalpurush;">SL
+                                        </span>
+                                    </td>
+                                    <td style="border: 1px solid black ; text-align: center; font-weight: bold;">
+                                        <span style="color: #000000; font-family: Kalpurush;">
+                                            Product Name
+                                        </span>
+                                    </td>
+
+                                    <td style="border: 1px solid black ; text-align: center; font-weight: bold;">
+                                        <span style="color: #000000; font-family: Kalpurush;">
+                                            Product Category
+                                        </span>
+                                    </td>
+                                    <td style="border: 1px solid black ; text-align: center; font-weight: bold;">
+                                        <span style="color: #000000; font-family: Kalpurush;">
+                                            Sold Quantity
+                                        </span>
+                                    </td>
+                                    <td style="border: 1px solid black ; text-align: center; font-weight: bold;">
+                                        <span style="color: #000000; font-family: Kalpurush;">
+                                            Total Sale Without Tax
+                                        </span>
+                                    </td>
+                                    <td style="border: 1px solid black ; text-align: center; font-weight: bold;">
+                                        <span style="color: #000000; font-family: Kalpurush;">
+                                            Total Tax
+                                        </span>
+                                    </td>
+
+                                    <td style="border: 1px solid black ; text-align: center; font-weight: bold;">
+                                        <span style="color: #000000; font-family: Kalpurush;">
+                                            Total Sale With Tax
+                                        </span>
+                                    </td>
+                                </tr>
+                                <br></br>
+
+                                <t t-set="i" t-value="0"/>
+                                <t t-set="total_qty" t-value="0.00"/>
+                                <t t-set="total_sale_value" t-value="0.00"/>
+                                <t t-set="total_sale_with_out_tax" t-value="0.00"/>
+                                <t t-set="total_sale_with_tax" t-value="0.00"/>
+                                <t t-set="total_tax" t-value="0.00"/>
+                                <t t-foreach="form_data" t-as="tr_data">
+                                    <t t-set="i" t-value="i+1"/>
+
+                                    <tr style="border: 1px solid black ; width:100%;">
+                                        <td style="border: 1px solid black ; font-weight: bold;">
+                                            <span style="color: #000000; font-family: Kalpurush;">
+                                                <span t-esc="i"/>
+                                            </span>
+                                        </td>
+                                        <td style="border: 1px solid black ; font-weight: bold;">
+                                            <span style="color: #000000; font-family: Kalpurush;">
+                                                <span t-esc="tr_data.get('p_name')"/>
+
+                                            </span>
+                                        </td>
+                                        <td style="border: 1px solid black ; font-weight: bold;">
+                                            <span style="color: #000000; font-family: Kalpurush;">
+                                                <span t-esc="tr_data.get('p_categ')"/>
+
+                                            </span>
+                                        </td>
+
+                                        <td style="border: 1px solid black ; text-align: right; font-weight: bold;">
+                                            <span style="color: #000000; font-family: Kalpurush;">
+                                                <span t-esc="tr_data.get('t_qty')"/>
+                                                <t t-if="tr_data.get('t_qty')">
+                                                    <t t-set="total_qty" t-value="total_qty+(tr_data.get('t_qty') if tr_data.get('t_qty') else 0.00)"/>
+                                                </t>
+
+                                            </span>
+                                        </td>
+
+                                        <td style="border: 1px solid black ; text-align: right; font-weight: bold;">
+                                            <span style="color: #000000; font-family: Kalpurush;">
+                                                <span t-esc="tr_data.get('t_sale_without_tax')"/>
+                                                <t t-if="tr_data.get('t_sale_without_tax')">
+                                                    <t t-set="total_sale_with_out_tax"
+                                                       t-value="total_sale_with_out_tax+(tr_data.get('t_sale_without_tax') if tr_data.get('t_sale_without_tax') else 0.00)"/>
+                                                </t>
+
+                                            </span>
+                                        </td>
+
+                                        <td style="border: 1px solid black ; text-align: right; font-weight: bold;">
+                                            <span style="color: #000000; font-family: Kalpurush;">
+                                                <span t-esc="tr_data.get('t_tax')"/>
+                                                <t t-if="tr_data.get('t_tax')">
+                                                    <t t-set="total_tax"
+                                                       t-value="total_tax+(tr_data.get('t_tax') if tr_data.get('t_tax') else 0.00)"/>
+                                                </t>
+
+                                            </span>
+                                        </td>
+
+                                        <td style="border: 1px solid black ; text-align: right; font-weight: bold;">
+                                            <span style="color: #000000; font-family: Kalpurush;">
+                                                <span t-esc="tr_data.get('t_with_tax')"/>
+                                                <t t-if="tr_data.get('t_with_tax')">
+                                                    <t t-set="total_sale_with_tax"
+                                                       t-value="total_sale_with_tax+(tr_data.get('t_with_tax') if tr_data.get('t_with_tax') else 0.00)"/>
+                                                </t>
+
+                                            </span>
+                                        </td>
+
+
+                                    </tr>
+
+                                </t>
+                                <tr style="border: 1px solid black ; width:100%;">
+                                    <td style="border: 1px solid black ; text-align: right; font-weight: bold;"></td>
+                                    <td style="border: 1px solid black ; text-align: right; font-weight: bold;"></td>
+                                    <td style="border: 1px solid black ; text-align: right; font-weight: bold;">Total
+                                    </td>
+                                    <td style="border: 1px solid black ; text-align: right; font-weight: bold;">
+                                        <span t-esc="total_qty"/>
+                                    </td>
+                                    <td style="border: 1px solid black ; text-align: right; font-weight: bold;">
+                                        <span t-esc="total_sale_with_out_tax"/>
+                                    </td>
+                                    <td style="border: 1px solid black ; text-align: right; font-weight: bold;">
+                                        <span t-esc="total_tax"/>
+                                    </td>
+                                    <td style="border: 1px solid black ; text-align: right; font-weight: bold;">
+                                        <span t-esc="total_sale_with_tax"/>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                    </div>
+
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>
